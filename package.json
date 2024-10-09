@@ -1,5 +1,5 @@
 {
-  "name": "capacitor-kakaologin",
+  "name": "@bdhwan/capacitor-kakaologin",
   "version": "0.0.2",
   "description": "kakao login",
   "main": "dist/plugin.cjs.js",

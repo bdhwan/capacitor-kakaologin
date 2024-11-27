@@ -15,6 +15,8 @@ npx cap sync
 
 * [`echo(...)`](#echo)
 * [`getAccessToken(...)`](#getaccesstoken)
+* [`logout(...)`](#logout)
+* [`unlink(...)`](#unlink)
 
 </docgen-index>
 
@@ -48,6 +50,36 @@ getAccessToken(web_key: string, returnUrl: string) => Promise<{ code?: string; e
 | **`returnUrl`** | <code>string</code> |
 
 **Returns:** <code>Promise&lt;{ code?: string; error?: string; }&gt;</code>
+
+--------------------
+
+
+### logout(...)
+
+```typescript
+logout(web_key: string) => Promise<{ result: boolean; error?: string; }>
+```
+
+| Param         | Type                |
+| ------------- | ------------------- |
+| **`web_key`** | <code>string</code> |
+
+**Returns:** <code>Promise&lt;{ result: boolean; error?: string; }&gt;</code>
+
+--------------------
+
+
+### unlink(...)
+
+```typescript
+unlink(web_key: string) => Promise<{ result: boolean; error?: string; }>
+```
+
+| Param         | Type                |
+| ------------- | ------------------- |
+| **`web_key`** | <code>string</code> |
+
+**Returns:** <code>Promise&lt;{ result: boolean; error?: string; }&gt;</code>
 
 --------------------
 

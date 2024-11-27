@@ -76,27 +76,38 @@ export class CapacitorKakaologinWeb extends WebPlugin implements CapacitorKakaol
     if (typeof window['Kakao'] !== 'undefined') {
       window['Kakao'].init(web_key);
       try {
-        await window['Kakao'].Auth.logout();
+        const Kakao = window['Kakao'];
+        Kakao.Auth.logout();
+
         console.log('Logged out from Kakao');
         return { result: true };
       } catch (error) {
         console.error('Logout failed', error);
         return { result: false, error: 'Logout failed' };
       }
+    } else {
+      console.log('Kakao SDK not loaded');
+      return { result: false, error: 'Kakao SDK not loaded' };
     }
-    return { result: false, error: 'Kakao SDK not loaded' };
   }
 
   // Unlink method
   async unlink(web_key: string): Promise<{ result: boolean; error?: string }> {
+    console.log('unlink', web_key);
+    console.log('removeKakaoSdk');
     this.removeKakaoSdk();
+    console.log('loadKakaoSdk');
     await this.loadKakaoSdk();
     if (typeof window['Kakao'] !== 'undefined') {
+      console.log('init Kakao');
       window['Kakao'].init(web_key);
       try {
-        await window['Kakao'].API.request({
+        const Kakao = window['Kakao'];
+        console.log('request unlink');
+        await Kakao.API.request({
           url: '/v1/user/unlink',
         });
+
         console.log('Unlinked from Kakao');
         return { result: true };
       } catch (error) {

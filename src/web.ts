@@ -18,6 +18,8 @@ export class CapacitorKakaologinWeb extends WebPlugin implements CapacitorKakaol
 
   // Get Kakao access token and remove Kakao SDK
   async getAccessToken(web_key: string, returnUrl: string): Promise<{ code?: string; error?: string }> {
+    alert('getAccessToken in plugin');
+    console.log('getAccessToken in plugin', web_key, returnUrl);
     this.removeKakaoSdk();
     await this.loadKakaoSdk();
     if (typeof window['Kakao'] !== 'undefined') {
@@ -77,7 +79,7 @@ export class CapacitorKakaologinWeb extends WebPlugin implements CapacitorKakaol
       window['Kakao'].init(web_key);
       try {
         const Kakao = window['Kakao'];
-        Kakao.Auth.logout();
+        await Kakao.Auth.logout();
 
         console.log('Logged out from Kakao');
         return { result: true };

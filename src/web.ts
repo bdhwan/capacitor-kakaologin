@@ -17,8 +17,11 @@ export class CapacitorKakaologinWeb extends WebPlugin implements CapacitorKakaol
   }
 
   // Get Kakao access token and remove Kakao SDK
-  async getAccessToken(web_key: string, returnUrl: string): Promise<{ code?: string; error?: string }> {
-    alert('getAccessToken in plugin');
+  async getAccessToken(): Promise<{ code?: string; error?: string }> {
+    return { error: 'web sdk cannot get access token directly use getAuthToken method' };
+  }
+
+  async getAuthToken(web_key: string, returnUrl: string): Promise<{ code?: string; error?: string }> {
     console.log('getAccessToken in plugin', web_key, returnUrl);
     this.removeKakaoSdk();
     await this.loadKakaoSdk();
@@ -69,54 +72,5 @@ export class CapacitorKakaologinWeb extends WebPlugin implements CapacitorKakaol
       document.head.removeChild(script); // Remove the script from the DOM
       console.log('Kakao SDK removed');
     }
-  }
-
-  // Logout method
-  async logout(web_key: string): Promise<{ result: boolean; error?: string }> {
-    this.removeKakaoSdk();
-    await this.loadKakaoSdk();
-    if (typeof window['Kakao'] !== 'undefined') {
-      window['Kakao'].init(web_key);
-      try {
-        const Kakao = window['Kakao'];
-        await Kakao.Auth.logout();
-
-        console.log('Logged out from Kakao');
-        return { result: true };
-      } catch (error) {
-        console.error('Logout failed', error);
-        return { result: false, error: 'Logout failed' };
-      }
-    } else {
-      console.log('Kakao SDK not loaded');
-      return { result: false, error: 'Kakao SDK not loaded' };
-    }
-  }
-
-  // Unlink method
-  async unlink(web_key: string): Promise<{ result: boolean; error?: string }> {
-    console.log('unlink', web_key);
-    console.log('removeKakaoSdk');
-    this.removeKakaoSdk();
-    console.log('loadKakaoSdk');
-    await this.loadKakaoSdk();
-    if (typeof window['Kakao'] !== 'undefined') {
-      console.log('init Kakao');
-      window['Kakao'].init(web_key);
-      try {
-        const Kakao = window['Kakao'];
-        console.log('request unlink');
-        await Kakao.API.request({
-          url: '/v1/user/unlink',
-        });
-
-        console.log('Unlinked from Kakao');
-        return { result: true };
-      } catch (error) {
-        console.error('Unlink failed', error);
-        return { result: false, error: 'Unlink failed' };
-      }
-    }
-    return { result: false, error: 'Kakao SDK not loaded' };
   }
 }

@@ -21,6 +21,13 @@ class CapacitorKakaologinPlugin : Plugin() {
         call.resolve(ret)
     }
 
+    @PluginMethod
+    fun getAuthToken(call: PluginCall) {
+        Log.i("Echo", "getAuthToken")
+        val ret = JSObject()
+        ret.put("error", "use getAccessToken instead")
+        call.resolve(ret)
+    }
 
     @PluginMethod
     fun getAccessToken(call: PluginCall) {
